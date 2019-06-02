@@ -20,6 +20,8 @@ Mobipocket电子书格式是基于使用XHTML的开放电子书标准，并且�
 生成命令：  
 > $ gitbook mobi ./ ./mybook.mobi   
 
+ebook-convert是生成电子书所必需的(epub，mobi，pdf)插件。
+
 # 章节和子章节
 包含子章节的例子  
 ```

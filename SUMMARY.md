@@ -7,4 +7,4 @@
 * [微信小程序](wechat/read.md)
     * [微信小程序的介绍与准备](wechat/read.md)
     * [微信小程序的目录结构](wechat/summary.md)
-    * [开发开始](wechat/start.md)
+    * [起始开发](wechat/start.md)

@@ -4,3 +4,7 @@
 * [gitbook](gitbook_info/introduce.md)
     * [gitbook的介绍](gitbook_info/introduce.md)
     * [gitbook的使用](gitbook_info/use.md)
+* [微信小程序](wechat/read.md)
+    * [微信小程序的介绍与准备](wechat/read.md)
+    * [微信小程序的目录结构](wechat/summary.md)
+    * [开发开始](wechat/start.md)

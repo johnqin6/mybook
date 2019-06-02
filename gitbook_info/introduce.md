@@ -139,4 +139,4 @@ gitbook的使用需要node.js环境,再用npm下载
 
 
 参考文章 [GitBook 使用教程](https://www.jianshu.com/p/421cc442f06c)
-
+[中文gitbook文档网址](http://gitbook.hushuang.me/)

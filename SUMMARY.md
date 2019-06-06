@@ -8,3 +8,5 @@
     * [微信小程序的介绍与准备](wechat/read.md)
     * [微信小程序的目录结构](wechat/summary.md)
     * [起始开发](wechat/start.md)
+    * [全局页面](wechat/app.md)
+    * [普通页面](wechat/pages.md)

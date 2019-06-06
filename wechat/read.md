@@ -62,3 +62,5 @@
 |Ctrl+Shift+P| 预览项目|
 |Shift+Alt+F| 格式化代码|
 
+## 小程序知识体系导图
+![小程序知识体系导图](http://static.zybuluo.com/shenguotao/xfal98qppkqv94ezpeik3euk/mp.png.png)

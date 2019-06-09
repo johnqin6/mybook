@@ -10,3 +10,6 @@
     * [起始开发](wechat/start.md)
     * [全局页面](wechat/app.md)
     * [普通页面](wechat/pages.md)
+    * [生命周期和wxss样式](wechat/lifecycleAndgrammar.md)
+    * [微信小程序的注意事项](wechat/not.md) 
+    * [事件](wechat/event.md)

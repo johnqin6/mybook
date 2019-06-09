@@ -47,3 +47,25 @@ Page({
 });
 
 ```
+
+5. 点击不随地图移动控件失效   
+原因：微信开发工具对分辨率处理有bug，
+解决方法：将电脑分辨率调到100%；
+步骤：点击鼠标右键 --> 显示设置 --> 显示 --> 缩放与布局设置为100%
+
+6. 事件函数如何传参
+微信小程序的事件函数无法直接传参  
+解决方法：在元素上自定义属性(自定义属性以data-开头), 再在函数中用e.target.dataset获得值;
+
+
+```html
+<view data-id="{{id}}" bindtap="bindtap"></view>
+```
+
+```javascript
+Page({
+  bindtap(e) {
+    let id = e.target.dataset.id;
+  }
+})
+```

@@ -12,4 +12,7 @@
     * [普通页面](wechat/pages.md)
     * [生命周期和wxss样式](wechat/lifecycleAndgrammar.md)
     * [微信小程序的注意事项](wechat/not.md) 
-    * [事件](wechat/event.md)
+    * [事件](wechat/event.md)  
+* [Node.js](node/introduce.md)
+    * [Node.js介绍](node/introduce.md)
+    * [安装起步](node/install.md)

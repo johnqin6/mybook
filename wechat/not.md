@@ -69,3 +69,32 @@ Page({
   }
 })
 ```
+
+7. 微信小程序如何操作元素
+开发过程也有可能要操作dom元素，这一点小程序也想到了，提供了一些API帮助我们操作dom。   
+wx.createSelectorQuery()用以返回一个 SelectorQuery 对象实例为操作dom元素做准备，
+在自定义组件使用有所区别，用this.createSelectorQuery()。  
+
+以获得dom元素的宽为例：  
+```wxml
+<view id="text">hello</view>
+```
+```javascript
+Page({
+  onShow(){
+    var query = wx.createSelectorQuery();
+    //select() 相当于原生的querySelect(),用以拿到id或class标识的元素
+    query.select('#text').boundingClientRect(function(rect){
+      rect.id      // 节点的ID
+      rect.dataset // 节点的dataset
+      rect.left    // 节点的左边界坐标
+      rect.right   // 节点的右边界坐标
+      rect.top     // 节点的上边界坐标
+      rect.bottom  // 节点的下边界坐标
+      rect.width   // 节点的宽度
+      rect.height  // 节点的高度
+    }).exec();  //exec()执行所有的请求，请求结果按请求次序构成数组
+  }
+})
+```  
+详细使用可以前往小程序文档--> API --> WXML查看 [传送门](https://developers.weixin.qq.com/miniprogram/dev/api/wxml/wx.createSelectorQuery.html)

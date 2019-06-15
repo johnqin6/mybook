@@ -16,3 +16,7 @@
 * [Node.js](node/introduce.md)
     * [Node.js介绍](node/introduce.md)
     * [安装起步](node/install.md)
+    * [搭建Node服务器](node/service.md) 
+    * [网络概念](node/netConcept.md)
+
+* [代码风格](codeStyle/index.md) 

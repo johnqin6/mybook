@@ -27,5 +27,5 @@
     * [mongoDB概念解析](mongodb/idea.md)
 
 * [代码风格](codeStyle/index.md)
-    * [standarjs代码风格](standarjs.md) 
+    * [standarjs代码风格](codeStyle/standarjs.md) 
 

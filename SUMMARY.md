@@ -28,6 +28,10 @@
     * [mongoDB数据库的连接和操作](mongodb/dataBase.md)
     * [集合的创建和删除](mongodb/collection.md)
     * [文档的操作(插入，更新，删除)](mongodb/document.md)
+    * [文档操作(查询)](mongodb/query.md)
+    * [type操作符](mongodb/type.md)
+    * [limit,skip,sort方法](mongodb/limitAndSkip.md)
+    * [索引](mongodb/indexes.md)
 
 * [代码风格](codeStyle/index.md)
     * [standarjs代码风格](codeStyle/standarjs.md) 

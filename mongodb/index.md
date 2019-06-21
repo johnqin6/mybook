@@ -91,4 +91,6 @@ noSQL用于超大规模数据的存储，例如谷歌或Fackbook 每天为他们
   + RockMongo — 最好的PHP语言的MongoDB管理工具，轻量级, 支持多国语言  
 
 ## 安装
-请自行前往官网安装下载 [传送门](https://www.mongodb.com/)  
+请自行前往官网安装下载 [传送门](https://www.mongodb.com/)     
+
+mongoose 比较好的文章 [传送门](https://segmentfault.com/a/1190000012095054#articleHeader0)

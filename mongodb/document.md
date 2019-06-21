@@ -88,7 +88,8 @@ db.numbers.insert(arr);
 
 ## 文档的更新 
 mongodb 使用update()和save()方法来更新集合中的文档 
-- update()方法 
+
+### update()方法 
   + update()方法用于更新已存在的文档，语法格式如下：   
   ```
   db.collection.update(
@@ -103,5 +104,125 @@ mongodb 使用update()和save()方法来更新集合中的文档
   ```  
   + 参数说明 
     * query: update的查询条件，类似sql update查询中where后面的  
-    * update: 
+    * update: update的对象和一些更新的操作符($,$inc)等，也可以理解为sql update查询中set后面的
+    * upsert: 可选，这个参数是：如果不存在update的记录，是否插入objNew,true为插入，默认为false,不插入    
+    * multi: 可选，mongodb 默认false,只更新找到的第一条记录，true: 就把按条件查出来的多条记录全部更新  
+    * writeConern: 可选，抛出异常的级别  
+- 实例： 
+1. 先在集合col插入数据
+```
+> db.col.insert({
+    title: 'MongoDB 教程', 
+    description: 'MongoDB 是一个 Nosql 数据库',
+    by: '菜鸟教程',
+    url: 'http://www.runoob.com',
+    tags: ['mongodb', 'database', 'NoSQL'],
+    likes: 100
+})
+```
+2. 通过update()方法进行更新 
+```
+> db.col.update({'title': 'mongodb 教程'}, {$set: {'title': 'mongodb'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })   # 输出信息
+> db.col.find().pretty() 
+{
+    "_id" : ObjectId("56064f89ade2f21f36b03136"),
+    "title" : "MongoDB",
+    "description" : "MongoDB 是一个 Nosql 数据库",
+    "by" : "菜鸟教程",
+    "url" : "http://www.runoob.com",
+    "tags" : [
+            "mongodb",
+            "database",
+            "NoSQL"
+    ],
+    "likes" : 100
+}
+```  
+以上语句只会修改第一条发现的文档，如修改多条相同的文档，可将multi参数设置为true  
+> db.col.update({'title': 'mongodb 教程'}, {$set: {'title': 'mongodb'}}, {multi: true})    
+
+### save() 方法  
+save()方法通过传入的文档替换已有的文档，语法格式如下：
+```
+db.collection.save(
+    <document>,
+    {
+        writeConcern: <document>
+    }
+)
+```  
+参数说明:     
+  * document: 文档数据
+  * writeConcern: 可选，抛出异常的级别  
+
+- 实例
+替换_id为 56064f89ade2f21f36b03136 的文档数据    
+```
+> db.col.save({
+    "_id" : ObjectId("56064f89ade2f21f36b03136"),
+    "title" : "MongoDB",
+    "description" : "MongoDB 是一个 Nosql 数据库",
+    "by" : "Runoob",
+    "url" : "http://www.runoob.com",
+    "tags" : [
+            "mongodb",
+            "NoSQL"
+    ],
+    "likes" : 110
+})
+```  
+
+### 3.2版新增的更新方法 
+- db.collection.updateOne() 向指定集合更新单个文档
+- db.collection.updateMany() 向指定集合更新多个文档
+
+首先在test集合插入测试数据
+```
+> use test 
+> db.collection.insert([
+    {"name":"abc","age":"25","status":"zxc"},
+    {"name":"dec","age":"19","status":"qwe"},
+    {"name":"asd","age":"30","status":"nmn"},
+])
+```  
+更新单个文档   
+```
+> db.collection.updateOne({"name": "abc"},{$set: {"age": 28}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.test_collection.find()
+{ "_id" : ObjectId("59c8ba673b92ae498a5716af"), "name" : "abc", "age" : "28", "status" : "zxc" }
+{ "_id" : ObjectId("59c8ba673b92ae498a5716b0"), "name" : "dec", "age" : "19", "status" : "qwe" }
+{ "_id" : ObjectId("59c8ba673b92ae498a5716b1"), "name" : "asd", "age" : "30", "status" : "nmn" }
+```
+更新多个文档
+```
+> db.collection.updateMany({"age": {$gt: 10},{$set: {"status": "xyz"}}})
+{ "acknowledged" : true, "matchedCount" : 3, "modifiedCount" : 3 }
+> db.test_collection.find()
+{ "_id" : ObjectId("59c8ba673b92ae498a5716af"), "name" : "abc", "age" : "28", "status" : "xyz" }
+{ "_id" : ObjectId("59c8ba673b92ae498a5716b0"), "name" : "dec", "age" : "19", "status" : "xyz" }
+{ "_id" : ObjectId("59c8ba673b92ae498a5716b1"), "name" : "asd", "age" : "30", "status" : "xyz" }
+```   
+移除集合中的键值对，使用$unset操作符    
+语法：   
+> { $unset: {<field1>: "",...}}     
+如果指定的字段不存在，则不操作   
+```
+> db.col.update({"_id":"56064f89ade2f21f36b03136"}, {$set:{ "test2" : "OK"}})
+db.col.find()
+
+> db.col.update({"_id":"56064f89ade2f21f36b03136"}, {$unset: { "test2" : "OK"}})
+```
+
+## 删除文档
+* deleteOne() 方法删除单个文档  
+* deleteMany() 方法删除多个文档  
+实例：  
+删除集合下全部文档   
+> db.inverntory.deleteMany({})        
+删除status等于D的一个文档   
+> db.inverntory.deleteOne({ status: "D"})    
+删除status等于A的全部文档    
+> db.inverntory.deleteMany({ status: "A"})
 

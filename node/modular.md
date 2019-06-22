@@ -130,3 +130,18 @@ exports 是 module.exports的一个引用
 
 ### package.json 包说明文件 
 每一个项目都要有一个 package.json 文件
+
+### package.json 和 package-lock.json
+
+package-lock.json 时 npm5 后加入的  
+当你安装包时， npm都会生成或更新`package-lock.json`这个文件  
+- npm5 以后的版本安装包不需要加 `--save` 参数，它会自动保存依赖信息 
+- 当你安装包时，会自动创建或更新`package-lock.json`这个文件 
+- `package-lock.json`文件会自动保存`node_modules`中所有包的信息（版本，下载地址）
+  + 这样 重新`npm install` 的时候速度就会提升  
+- 从文件看，有一个`lock`称之为锁 
+  + 这个`lock`是用来锁定版本的
+  + 如项目依赖了`1.1.1`版本 
+  + 当你重新`install`时会下载最新版本
+  + `package-lock.json`会锁住版本号，防止自动升级
+

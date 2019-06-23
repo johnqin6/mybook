@@ -90,3 +90,72 @@ app.post('/postData', (req, res) => {
     res.redirect('/');
 });
 ``` 
+
+## express 中使用session和cookie
+
+express 框架，默认不支持 session和 cookie, 但我们可以使用第三方中间件: express-session 来解决
+
+- 安装
+> npm install express-session  
+- 引入
+> var session = require('express-session')  
+- 配置使用
+```javascript
+var session = require('express-session')
+// 配置好后就可以使用 req.session来访问和设置session
+app.use(session({
+    // 配置加密字符串，她会在原有的加密基础上和这个字符串拼起来加密
+    // 目的是为了增加安全性，防止客户端恶意伪造
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false   // 无论你是否使用session, 都会默认给你一个分配一把钥匙
+}))   
+
+// 使用 添加 session数据
+req.session.user = user
+
+// 获得session数据
+req.session.user
+```
+**提示：默认session数据是内存存储的，服务器一旦重启就会丢失，真正的生产环境会把session进行持久化存储**
+
+## express 中间件
+- 中间件不关心请求路径和请求方法
+- 任何请求都可以进入这个中间件
+- 中间件可以有多个
+- 中间件本身是一个方法，该方法接受三个三个参数
+  + request 请求对象
+  + response 响应对象
+  + next 下一个中间件  
+  + 一个请求进入中间件，如果不调用next(),请求将停留在当前中间件
+
+例子：
+```javascript
+app.use(function (req, res, next) {
+    console.log(111)
+    next()  
+})
+
+app.use(function (req, res, next) {
+    console.log(222)
+    next()  
+})
+
+// 以 /xxx 开头的路径中间件
+app.use('/a', function(req, res, next) {
+    console.log(req.url)
+})
+
+
+app.use('/a', function(req, res, next) {
+    fs.readyFile('./data/a.txt', function(err) {
+        if (err) {
+            next(err) //当调用next的时候，如果传递了参数，则将直接往后找到带有四个参数的应用级别的中间件
+        }
+    })
+})
+// 错误处理中间件
+app.use(function (err, req, res, next) {
+  res.status(500).send(err.message)
+})
+```

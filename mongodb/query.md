@@ -61,3 +61,8 @@ _id键默认返回，需要主动指定 _id: 0,才会隐藏
 
 若不想指定查询条件参数 query 可以 用 {} 代替，但是需要指定 projection 参数 
 > db.collection.find({}, {title: 1})    
+
+查询数据的条数
+> db.collection.find().count()  
+根据条件查询数据的条数
+> db.collection.find({age: {$gt: 20, $lte: 50}}).count()

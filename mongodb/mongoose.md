@@ -25,6 +25,23 @@ db.once('open', () => {
 })
 ```
 
+- 设置数据库权限
+```
+> user test
+> db.createUser({
+  user: user,
+  pwd: pwd,
+  roles: [
+    {
+      role: "readWrite ...", // 具体权限
+      db: ""  // database
+    }
+  ]
+})
+```
+在node中连接数据库(已设连接权限)
+> mongoose.connect('mongodb://admin:password@localhost/test')
+
 ## Schema 
 Mongoose的一切都源于一个Schema。Schema是一种以文件形式存储的数据库模型骨架，无法直接通往数据库端，
 也就是说它无法直接操作数据库。但是Schema以一种映射的方式定义了集合的结构，每一个schema都映射mongodb

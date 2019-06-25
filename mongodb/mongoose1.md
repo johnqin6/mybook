@@ -34,7 +34,7 @@ const user = new User({
   gender: male
 })
 // 2. 将实例保存
-User.save(err => {
+user.save(err => {
   if (err) return console.log(err)
   console.log('保存成功')
 })

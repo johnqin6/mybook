@@ -35,6 +35,7 @@
     * [limit,skip,sort方法](mongodb/limitAndSkip.md)
     * [索引](mongodb/indexes.md)
     * [mongoose的使用](mongodb/mongoose.md)
+    * [mongoose的使用（文档的操作）](mongodb/mongoose.md)
 
 * [代码风格](codeStyle/index.md)
     * [standarjs代码风格](codeStyle/standarjs.md) 

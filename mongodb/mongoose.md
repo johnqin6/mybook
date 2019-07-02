@@ -276,3 +276,36 @@ UserSchema.statics = {
   }
 }
 ```
+
+## mongoose 模块化
+
+1. 创建一个`db.js`文件
+```javascript
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodblocalhost/test', { useMongoClient: true}, () => {
+  console.log('数据库服务器已连接')
+})
+
+moudle.exports = mongoose
+```
+2. 在相关模块文件引入`db.js`文件
+```javascript
+// user.js
+const mongoose = require('./db.js')
+
+const Schema = mongoose.Schema
+
+const UserSchema = new Schema({
+  name: String,
+  gender: {
+    type: Number,
+    enum: [1, 2]
+  }
+})
+
+const User = mongoose.model('User', UserSchema, 'user')
+
+module.exports = UserModel  
+
+```

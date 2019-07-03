@@ -309,3 +309,45 @@ const User = mongoose.model('User', UserSchema, 'user')
 module.exports = UserModel  
 
 ```
+
+## mongoose预定义修饰符
+
+- lowercase(转小写), uppercase(转大写), trim(去首尾空格) 
+```javascript
+var UserSchema = mongoose.Schema({
+  name: {
+    type: String,
+    trim: true 
+  },
+  age: Number
+})
+```  
+- mongoose getter和setter修饰符
+除了mongoose内置的修饰符以外，我们还可以通过set（建议使用）修饰符在增加数据时对数据格式化。
+也可以通过get(不建议使用)在实例获取数据时对数据进行格式化。   
+```javascript
+// setter:  
+var NewSchema = mongoose.Schema({
+  title: String,
+  redirect: {
+    type: String,
+    set(url) {
+      if(!url) return url;
+      if(url.indexOf('http://')!==0 && url.indexOf('https://') != 0) {
+        url = 'http://' + url;
+      }
+      return url;
+    },
+    get(url) {
+      if(!url) return url;
+      if(url.indexOf('http://')!==0 && url.indexOf('https://') != 0) {
+        url = 'http://' + url;
+      }
+      return url;
+    }
+  }
+})
+
+
+
+```

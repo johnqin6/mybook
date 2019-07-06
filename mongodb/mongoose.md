@@ -287,7 +287,7 @@ mongoose.connect('mongodblocalhost/test', { useMongoClient: true}, () => {
   console.log('数据库服务器已连接')
 })
 
-moudle.exports = mongoose
+module.exports = mongoose
 ```
 2. 在相关模块文件引入`db.js`文件
 ```javascript

@@ -2,7 +2,8 @@
 
 ## 文档的操作  
 
-- 在集合中创建文档
+- 在集合中创建文档     
+
 ```javascript
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
@@ -71,7 +72,8 @@ User.findOne({name: 'john'}, data => { console.log(data) })
     * `$gt` 大于
     * `$gte` 大于等于
     * `$ne`  不等于  
-  示例：
+  示例：   
+
   ```javascript
   // 查询 age 大于等于18小于等于30的文档
   User.find({
@@ -80,13 +82,15 @@ User.findOne({name: 'john'}, data => { console.log(data) })
       $lte: 30
     }
   })
-  ```
+  ```   
+
   + 或查询 OR
     * `$in` 一个键对应多个键
     * `$nin` 同上取反，一个键不对应指定键
     * `$or`  多个条件匹配，可以嵌套$in使用
     * `$not` 同上取反，查询与特定模式不匹配的文档  
   示例： 
+
   ```javascript
   // 查询 age 等于20或21或30的文档 
   User.find({
@@ -106,7 +110,8 @@ User.findOne({name: 'john'}, data => { console.log(data) })
   + 类型查询  
     null 能匹配自身和不存在的值，想要匹配的值为null, 就要通过`$exists`
     条件判定键值已经存在，`$exists`(表示是否存在的意思)   
-  示例：
+  示例：   
+
   ```javascript
   // 查询 age值为null的文档
   User.find({
@@ -133,6 +138,7 @@ User.findOne({name: 'john'}, data => { console.log(data) })
   + 模糊查询 -- 正则表达式
     mongodb使用prel兼容的正则表达式库来匹配正则表达式  
   示例：   
+
   ```javascript
   // 查询name为john的文档，并忽略大小写 
   User.find({
@@ -152,7 +158,8 @@ User.findOne({name: 'john'}, data => { console.log(data) })
   })
   ```  
   + 查询数组
-  示例：
+  示例：  
+
   ```javascript
   // 查询 array(数组类型)键中有10的文档， array: [1,2,3,4,5,10] 会匹配到
   User.find({
@@ -163,14 +170,16 @@ User.findOne({name: 'john'}, data => { console.log(data) })
     'array[5]': 10
   })
   ```
-  + `$all`匹配数组中的多个元素
+  + `$all`匹配数组中的多个元素 
+
   ```javascript
   // 查询数组中既有5又有10的文档
   User.find({
     'array': [5, 10]
   })
   ```
-  + `$size`匹配数组的长度
+  + `$size`匹配数组的长度 
+
   ```javascript
   // 查询array数组长度为3的文档
   User.find({
@@ -180,6 +189,7 @@ User.findOne({name: 'john'}, data => { console.log(data) })
   })
   ```
   `$slice`查询子集合返回  
+
   ```javascript
   // 查询 匹配array数组的前十个元素
   User.find({
@@ -195,7 +205,8 @@ User.findOne({name: 'john'}, data => { console.log(data) })
   })
   ```
   + where语句  
-    用它可以执行任意javascript语句作为查询的一部分，如果返回true文档就作为结果返回
+    用它可以执行任意javascript语句作为查询的一部分，如果返回true文档就作为结果返回  
+
   ```javascript
   User.find({
     '$where': function() {
@@ -226,8 +237,9 @@ User.findOne({name: 'john'}, data => { console.log(data) })
     * 只更新查找到的第一个文档 
   + Model.findByIdAndUpdate(id, update, callback)
     * 根据id查找更新文档  
-示例： 
-```
+示例：  
+
+```javascript
 // 更新age大于等于30的文档的gender属性值为'female'
 User.update({
   age: {
@@ -241,40 +253,48 @@ User.update({name: 'john'},{age: 20}, err => {})
 
 - 更新修改器 
   + `$inc` 增减修改器，只对数字有效 
+
   ```javascript
   // 找到 age=22的文档，修改文档的age自增1
   User.update({age: 22},{$inc: {age: 1}})
   ```
-  + `$set`指定一个键，这个键不存在就创建它，它可以是任何Mongodb支持的类型
+  + `$set`指定一个键，这个键不存在就创建它，它可以是任何Mongodb支持的类型   
+
   ```javascript
   // 找到 age=22的文档，修改文档的age为'haha'
   User.update({age: 22}, {$set: {age: 'haha'}})
   ```
-  + `$unset`同上取反，删除一个键
+  + `$unset`同上取反，删除一个键   
+
   ```javascript
   // 找到 age=22的文档，删除文档的age键
   User.update({age: 22}, {$unset: {age: 'haha'}})
   ```
   数组修改器   
-  + `$push`给一个键push一个数组成员，键不存在就创建 
+  + `$push`给一个键push一个数组成员，键不存在就创建  
+
   ```javascript
   // 增加一个array键，类型为数组，有一个成员10
   User.update({age: 22}, {$push: {'array': 10}})
   ```
-  + `$addToSet`向数组中添加一个元素，如果存在就不添加
+  + `$addToSet`向数组中添加一个元素，如果存在就不添加 
+
   ```javascript
   User.update({age: 22},{$addToSet: {'array': 10}})
   ```
   + `$each`遍历数组，和$push修改器配合可以插入多个值
+
   ```javascript
   User.update({age: 22}, {$push: {$each: [1,2,3,4,5]}})  // array : [10,1,2,3,4,5]
   ```
-  + `$pop`向数组尾部删除一个元素
+  + `$pop`向数组尾部删除一个元素 
+
   ```javascript
   User.update({age: 22}, {$pop: {array: 1}})
   // 执行后：array: [10,1,2,3,4] 将改为-1可以删除数组的首部元素
   ```
-  `$pull`向数组中删除指定元素
+  `$pull`向数组中删除指定元素 
+  
   ```javascript
   User.update({age: 22}, {$pull: {array: 10}})
   // 执行后：array: [1,2,3,4] 匹配到array中的10后将其删除

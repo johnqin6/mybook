@@ -9,6 +9,7 @@ mongoose是node.js提供连接mongodb的一个库，类似于jquery和js的关�
 - 安装
 > npm install mongoose --save   
 - 连接数据库服务器及监听数据库
+
 ```javascript
 // 连接数据库服务器
 mongoose.connect('mongodb://localhost/test', { useMongoClient: true})
@@ -97,7 +98,8 @@ mongoose提供了几个内置验证器
   + 数值(Numbers)有最大(`man`)和最小(`min`)的验证器
   + 字符串(String)有`enum`,`match`,`maxLength`和`minLength`验证器
 
-示例：创建一个用户`Schema`,给不同的字段添加验证器  
+示例：创建一个用户`Schema`,给不同的字段添加验证器 
+
 ```javascript
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
@@ -139,7 +141,8 @@ required: [true, "必须项"]
 ```  
 
 - 自定义验证器
-我们以自定义一个手机验证器为例  
+我们以自定义一个手机验证器为例   
+
 ```javascript
 // modules/common/validation.js  
 
@@ -149,7 +152,8 @@ module.exports = {
   }
 }
 ```
-然后我们在`UserSchema`中的`phone`字段上添加自定义验证器   
+然后我们在`UserSchema`中的`phone`字段上添加自定义验证器  
+
 ```javascript
 // modules/users/usersModel.js
 ...
@@ -167,7 +171,8 @@ const UserSchema = new Schema({
   }
 }, {collection: 'users'})
 ```
-我们也可以使用数组添加多个验证器
+我们也可以使用数组添加多个验证器  
+
 ```javascript
 [
   {
@@ -178,8 +183,9 @@ const UserSchema = new Schema({
 ``` 
 - 错误提示
 当验证失败后，Error会返回一个错误对象，它实际上是`validatorError`对象，每个`validatorError`
-对象都有`kind`,`path`,`value`,`message`属性。  
-```javascript
+对象都有`kind`,`path`,`value`,`message`属性。   
+
+```javascript    
 const user = new UserModel(req.body)
 user.save((err, result) => {
   if(err) {
@@ -193,7 +199,8 @@ user.save((err, result) => {
   }
 })
 ```
-我们也可以同步拿到验证错误
+我们也可以同步拿到验证错误   
+
 ```javascript
 const user = new UsersModel();
 const errors = user.validateSync();
@@ -202,7 +209,8 @@ const errors = user.validateSync();
 > UserSchema.path('phone').validate(validation.phone, '`{PATH}`必须是有效的11位手机号码!')   
 
 默认情况下，验证器只有`save`操作才会触发，但是在mongoose4.x后，我们也可以开启`update()`和
-`findOneAndUpdate()`的验证器，只需将`runVailidators`设为true(默认为false)   
+`findOneAndUpdate()`的验证器，只需将`runVailidators`设为true(默认为false)    
+
 ```javascript
 const opts = { runVailidators: true}
 UsersModel.update({}, { name: 'john'}, opts, err => {})
@@ -218,7 +226,8 @@ $pullAll (>= 4.12.0)。
 
 ## Entity
 由Model创建的实体，使用`save`方法保存数据，Model和Entity都具有影响数据库的操作，但Model比Entity
-更具有操作性。  
+更具有操作性。   
+
 ```javascript
 const TestEntity = new TestModel({
   name : "Lenka",
@@ -232,7 +241,8 @@ console.log(TestEntity.age); // 36
 ## 方法  
 
 ## 实例方法
-模型的实例是文档(document)。文档有许多内置的实例方法，同时我们也可以自定义文档实例方法    
+模型的实例是文档(document)。文档有许多内置的实例方法，同时我们也可以自定义文档实例方法   
+
 ```javascript
 const UserSchema = new Schema({ name: String, age: Number}) 
 const User = mongoose.model('User', UserSchema)
@@ -240,6 +250,7 @@ const User = mongoose.model('User', UserSchema)
 常用的实例方法有`remove`,`set`,`invalidate`,`populate`,`save`等。  
 
 我们也可以自定义实例方法。   
+
 ```javascript
 UserSchema.methods.findUserName = function(cb) {
   return this.model('User').find({ name: this.name}, cb)
@@ -247,8 +258,9 @@ UserSchema.methods.findUserName = function(cb) {
 ```
 
 ### 静态方法
-常用的内置静态方法有：`create`,`find`,`findOne`等。   
-给模型添加静态方法：
+常用的内置静态方法有：`create`,`find`,`findOne`等。     
+给模型添加静态方法：   
+
 ```javascript
 UserSchema.statics.findByName = function(name, cb) {
   return this.find({ name: new RegExp(name, 'i')}, cb)
@@ -279,7 +291,8 @@ UserSchema.statics = {
 
 ## mongoose 模块化
 
-1. 创建一个`db.js`文件
+1. 创建一个`db.js`文件    
+
 ```javascript
 const mongoose = require('mongoose')
 
@@ -289,7 +302,8 @@ mongoose.connect('mongodblocalhost/test', { useMongoClient: true}, () => {
 
 module.exports = mongoose
 ```
-2. 在相关模块文件引入`db.js`文件
+2. 在相关模块文件引入`db.js`文件 
+
 ```javascript
 // user.js
 const mongoose = require('./db.js')
@@ -312,7 +326,8 @@ module.exports = UserModel
 
 ## mongoose预定义修饰符
 
-- lowercase(转小写), uppercase(转大写), trim(去首尾空格) 
+- lowercase(转小写), uppercase(转大写), trim(去首尾空格)  
+
 ```javascript
 var UserSchema = mongoose.Schema({
   name: {
@@ -324,7 +339,8 @@ var UserSchema = mongoose.Schema({
 ```  
 - mongoose getter和setter修饰符
 除了mongoose内置的修饰符以外，我们还可以通过set（建议使用）修饰符在增加数据时对数据格式化。
-也可以通过get(不建议使用)在实例获取数据时对数据进行格式化。   
+也可以通过get(不建议使用)在实例获取数据时对数据进行格式化。    
+
 ```javascript
 // setter:  
 var NewSchema = mongoose.Schema({
@@ -347,7 +363,5 @@ var NewSchema = mongoose.Schema({
     }
   }
 })
-
-
 
 ```

@@ -1,6 +1,8 @@
 # mongoose 高级
 
-# mongoose聚合管道 
+# mongoose聚合管道  
+
+英文文档中是aggregation pipeline，直译为聚合管道，它可以对数据文档进行变换和组合。聚合管道是基于数据流概念，数据进入管道经过一个或多个stage，每个stage对数据进行操作（筛选，投射，分组，排序，限制或跳过）后输出最终结果
 
 ##  mongodb 的聚合管道查询
 
@@ -119,3 +121,147 @@ OrderModel.aggregate([
 })
 
 ```
+
+## 多表查询     
+
+```javascript
+// ./models/article.js
+var mongoose = require('./db')
+var Schema = mongoose.Schema
+var ArticleSchmea = new Schema({
+  cid: {
+    type: Schema.Types.ObjectId
+  },
+  title: String,
+  description: String,
+  author_id: {
+    type: Schema.Types.ObjectId
+  },
+  author_name: String,
+  content: String,
+  add_time: {
+    type: Date,
+    default: Date.now
+  }
+})
+
+module.exports = mongoose.model('Article', ArticleSchmea, 'article')
+
+// ./models/articlecate.js
+
+var mongoose = require('./db')
+var Schema = mongoose.Schema
+var ArticlecateSchema = new Schema({
+  title: String,
+  descript: String,
+  add_time: {
+    type: Date,
+    default: Date.now
+  }
+})
+
+module.exports = mongoose.model('Articlecate', ArticlecateSchema, 'articlecate')
+
+// ./models/user.js
+var mongoose = require('./db');
+var Schema = mongoose.Schema;
+var UserSchema = new Schema({
+  username: String,
+  password: String,
+  name: String,
+  age: Number,
+  sex: {
+    type: String,
+    enum: ['male','female']
+  },
+  tel: Number,
+  add_time: {
+    type: Date,
+    default: Date.now
+  }
+})
+
+module.exports = mongoose.model('User', UserSchema, 'user');
+
+// 多集合查询
+ArticleModel.aggregate([
+  {
+    $lookup: {  // 连接操作符
+      from: 'articlecate',  // 关联的集合
+      localField: 'cid',   // 本集合关联的字段
+      foreignField: '_id',  // 其他集合关联的字段
+      as: 'cate'   // 输出的字段
+    }
+  },
+  {
+    $lookup: {  // 连接操作符
+      from: 'user',  // 关联的集合
+      localField: 'author_id',   // 本集合关联的字段
+      foreignField: '_id',  // 其他集合关联的字段
+      as: 'user'   // 输出的字段
+    }
+  },
+], function(err, docs) {
+  if (err) console.log(err)
+  console.log(JSON.stringify(docs));
+})
+```
+
+## Populate的多集合查询
+
+mongodb在3.2版本以前无aggregate, mongoose使用populate完成aggregate的类似功能(现在推荐使用mongodb内置的aggregate) 
+
+```javascript
+// user.js 和 articlecale.js无变化， article需要添加关联
+var mongoose = require('./db')
+
+var Schema = mongoose.Schema
+
+var ArticleSchmea = new Schema({
+  cid: {
+    type: Schema.Types.ObjectId,
+    ref: 'Articlecate'  // 与文章分类建立关系
+  },
+  title: String,
+  description: String,
+  author_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'   // 与用户建立关系
+  },
+  author_name: String,
+  content: String,
+  add_time: {
+    type: Date,
+    default: Date.now
+  }
+})
+
+module.exports = mongoose.model('Article', ArticleSchmea, 'article')
+
+// 使用populate 需要将用的model都引入
+var ArticleModel = require('./models/article');
+var ArticleCateModel = require('./models/articlecate')
+var UserModel = require('./models/user')
+
+// 文章与文章分类集合关联
+// ArticleModel.find({}).populate('cid').exec(function(err, docs) {
+//   console.log(docs);
+// })
+
+// 三集合关联
+ArticleModel.find({}).populate('cid').populate('author_id').exec(function(err, docs) {
+  console.log(docs);
+})
+```
+
+## mongodb的导入，导出备份 
+
+导出：   
+> mongodump -h dbhost -d dbname -o dbdirectory
+
+导入:  
+> mongorestore -h dbhost -d dbname <path>
+
+
+
+

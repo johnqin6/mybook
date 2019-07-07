@@ -31,7 +31,8 @@ ArticlesSchema.index({ name: 1, by: -1}, {unique: true})
 ```
 注：当应用启动时，mongoose会自动为Schema中每一个定义了索引的调用ensureIndex, 确保生成索引，并在所有的
 ensureIndex调用成功或出现错误时，在model上发出一个'index'事件。开发环境用这个很好，但生产环境不要使用这个。  
-下面的方法禁用`ensureIndex`  
+下面的方法禁用`ensureIndex`   
+
 ```javascript
 mongoose.connect('mongodb://localhost/test', { config: { autoIndex: false}}) //推荐
 mongoose.createConnect('mongodb://localhost/test', { config: { autoIndex: false}}) //不推荐
@@ -75,7 +76,8 @@ News.findOne().populate('author', 'username').exec((err, doc) => {
 
 ## 虚拟属性（针对实例即文档）
 虚拟属性是文档属性，可以获取和设置但不能保存到mongoDB,用于格式化或组合化字段，从而
-制定者可以组成一个单一值存储多个值。  
+制定者可以组成一个单一值存储多个值。   
+
 ```javascript
 const personSchema = new Schema({
   name: {
@@ -93,7 +95,8 @@ const person = new Person({
 // 打印全名
 console.log(person.name.first + ' ' + person.name.last) // john tom
 ```
-如果我们在person定义虚拟属性的getter,就不需每次都写出这个字符串的拼接   
+如果我们在person定义虚拟属性的getter,就不需每次都写出这个字符串的拼接  
+
 ```javascript
 personSchema.virtual('name.full').get(() => {
   return this.name.first + ' ' + this.name.last
@@ -109,24 +112,28 @@ mongoose4.0 有两种类型的中间件：文档(document)中间件和查询(que
   + init
   + validate
   + save
-  + remove
+  + remove      
+
 查询(query)中间件支持模型和查询方法
   + count
   + find
   + findOneRemove
   + update  
 
-文档中间件和查询中间件支持前置（pre）和后置(post)钩子    
+文档中间件和查询中间件支持前置（pre）和后置(post)钩子       
+
 - pre(前置钩子) 
 有两种前置钩子，串行(serial)和并行(parallel)  
   + serial 
-  串行中间件是一个接一个执行，只有前一个中间件里调用next()函数，后一个中间件才会执行  
+  串行中间件是一个接一个执行，只有前一个中间件里调用next()函数，后一个中间件才会执行   
+
   ```javascript
   const schema = new Schema({...})
   schema.pre('save', next => { next() })
   ```
   + parallel
-  直到完成每个中间件才会去执行钩子方法里的操作  
+  直到完成每个中间件才会去执行钩子方法里的操作    
+
   ```javascript
   const schema = new Schema({...})
   schema.pre('save', true, (next, done) => {
@@ -138,7 +145,8 @@ mongoose4.0 有两种类型的中间件：文档(document)中间件和查询(que
 
 - 后置钩子(post) 
 后置中间件被执行后，钩子的方法和所有的前置钩子都已完成，后置钩子是一种为这些方法注册传统事件侦听器方式，
-可看作是一种操作后的提示   
+可看作是一种操作后的提示    
+
 ```javascript
 schema.post('init', doc => {
   console.log(doc._id)
@@ -149,6 +157,7 @@ schema.post('init', doc => {
 我们是可以通过插件形式来拓展Schema的功能。
 
 比如文章，当我们修改文章时，一般都会添加一个最后编辑时间，虽然我们可以每次修改时都手动更新，但是我们可以通过插件来自动更新    
+
 ```javascript
 // modules/common/plugins.js
 module.exports = {
@@ -167,7 +176,8 @@ ArticlesSchema.plugin(plugins.lastModified)
 ```
 当你点击页面的update按钮时，你会发现修改的文章文档已经添加了lastMod字段，并且每次修改都会更新。 
 
-plugin()方法也可以传递第二个参数，用于传递额外参数：  
+plugin()方法也可以传递第二个参数，用于传递额外参数：    
+
 ```javascript
 ArtclesSchema.plugin(plugins.lastModified, {index: true})
 
@@ -178,7 +188,8 @@ module.exports = {
 }
 ```
 
-- 全局pligins  
+- 全局pligins    
+
 mongoose单独有一个plugin()功能为每一个schema注册插件  
 ```javascript
 const plugins = require('../common/plugins')

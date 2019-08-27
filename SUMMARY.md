@@ -44,5 +44,9 @@
   * [mongoose高级(聚合管道)](mongodb/mongoose3.md)
 
 * [代码风格](codeStyle/index.md)
-    * [standarjs代码风格](codeStyle/standarjs.md) 
+  * [standarjs代码风格](codeStyle/standarjs.md) 
 
+* [vue的学习总结](vue/index.md)
+  * [vue的知识点总结](vue/index.md)
+  * [vue-cli3搭建vue开发环境](vue/vueCli.md)
+  * [vuex的使用总结](vue/vuex.md)

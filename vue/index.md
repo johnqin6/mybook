@@ -25,6 +25,17 @@ MVVM是前端视图层的分层开发思想，主要把每一个页面分层M/V/
   + VM: 数据层和视图层之间的调度者
 
 ## vue知识点总结   
+### vue生命周期
+- beforeCreate 实例初始化后，数据观测(data observer)和 event/watcher 事件配置之前被调用
+- create 实例创建完成后被调用，此时数据(数据观测-data observer, 属性和方法的运算，watch/event事件回调)已初始化,但挂载阶段还未开始。    
+- beforeMount 在挂载开始之前被调用, 相关的render函数首次被调用
+- mounted el被新创建的vm.$el替换，并挂载到实例上后调用该钩子
+- beforeUpdate 数据更新时调用，发生在虚拟dom重新渲染和打补丁之前。可在此钩子进一步更改状态，不会触发重渲染过程
+- updated 由于数据更改导致的虚拟dom重新渲染和打补丁，在此之后调用
+- beforeDestroy  实例销毁之前调用，在这一步，实例仍可用
+- destroyed  vue实例销毁后调用。调用后，vue实例的所有东西都会解绑定，所有事件监听被移除，所有子实例被销毁。该钩子在服务器端渲染期间不被调用
+- activated keep-alive 组件激活时调用, 该钩子在服务器端渲染期间不被调用
+- deactivated keep-alive 组件停用时调用, 该钩子在服务器端渲染期间不被调用
 
 ### vue中的双向绑定
 vue中用v-model绑定的数据，具有双向绑定的特性，即数据变化，视图随之变化，视图变化，数据也跟着变化。
@@ -189,3 +200,251 @@ v-for指令可以基于一个数组来渲染一个列表
   }
 </script>
 ```
+
+### class与style绑定
+
+#### 动态绑定类名
+在vue中我们可以动态绑定类名, 方便我们已特定的条件切换class。
+```html
+<!-- 动态绑定类名 -->
+<div v-bind:class="{'active': isActive }"></div>
+<!-- 以语法糖:代替v-bind的方式 动态绑定类名 -->
+<div :class="{'active': isActive }"></div>
+<!-- 动态绑定多个类名 -->
+<div class="static" :class="{'active': isActive, 'text-danger': hasError }"></div>
+<!-- 将动态绑定类名的数据对象摘出内联样式 -->
+<div :class="classObject"></div>
+<script>
+export default {
+  data() {
+    return {
+      classObject: {
+        active: true,
+        'text-danger': false
+      }
+    }
+  }
+}
+// 或放在计算属性中
+export default {
+  data() {
+    return {
+      isActive: true,
+      error: null
+    }
+  },
+  computed: {
+    classObject() {
+      return {
+        active: this.isActive && !this.error,
+        'text-danger': this.error && this.error.type === 'fatal'
+      }
+    }
+  }
+}
+</script>
+<!-- 数据语法 -->
+<div :class="[activeClass, errorClass]"></div>
+<script>
+ export default {
+   data() {
+     return {
+       activeClass: 'active',
+       errorClass: 'text-danger'
+     }
+   }
+ }
+</script>
+<!-- 三元表达式的方式来切换class -->
+<div :class="[isActive ? activeClass : '', errorClass]"></div>
+<!-- 在数组中使用对象语法 -->
+<div :class="[{activeClass: isActive}, errorClass]"></div>
+```  
+
+##### 案例解析
+- vue中用`v-bind`来动态绑定属性(动态绑定后，属性值可随数据的变化而变化), 也可以使用语法糖`:`来简写
+  + 例如：`<img :src="imgSrc" />`   
+- vue中动态绑定的方式有多种(以对象的形式，数组的形式，三元表达式等),可随实际情况选取不同的方式
+
+#### 动态绑定内联样式v-bind:style
+vue不仅能动态绑定类名，还能动态绑定内联样式
+```html
+<!-- 对样式单独绑定 -->
+<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">hello</div>
+<!-- 直接绑定一个样式对象 -->
+<div :style="styleObject">hello</div>
+
+<script>
+export default {
+  data() {
+    return {
+      activeColor: 'red',
+      fontSize: 30,
+      styleObject: {
+        color: 'red',
+        fontSize: '13px'
+      }
+    }
+  }
+}
+</script>
+
+<!-- v-bind:style 的数组语法可以将多个样式对象应用到同一个元素上 -->
+<div :style="[baseStyles, oveidingStyles]"></div>
+```
+
+### 计算属性computed  
+在计算属性内注册的内容会随内部值的变化而变化，并将数据缓存起来
+```html
+<p>姓：<input type="text" v-model="firstName"/></p>
+<p>名：<input type="text" v-model="lastName"/></p>
+<p>{{ username }}</p>
+<script>
+export default {
+  data() {
+    return {
+      firstName: '',
+      lastName: ''
+    }
+  },
+  computed: {
+    username() {
+      console.log('计算了一次') 
+      return this.firstName + ' ' + this.lastName;
+    }
+  }
+}
+</script>
+```
+username的值会随firstName和lastName的值变化而变化
+同时会将username缓存起来，只要firstName和lastName的值不变化,
+就不会再次计算
+
+### 监听器 water()
+
+```html
+<p>姓：<input type="text" v-model="firstName"/></p>
+<p>名：<input type="text" v-model="lastName"/></p>
+<p>{{ username }}</p>
+<script>
+export default {
+  data() {
+    return {
+      firstName: '',
+      lastName: '',
+      username: ''
+    }
+  },
+  methods: {
+    firstName(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.username = this.firstName + ' ' + this.lastName;
+      }
+    },
+    lastName(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.username = this.firstName + ' ' + this.lastName;
+      }
+    }
+  }
+}
+</script>
+```
+使用watch监听fullName的依赖值，当不是fullName依赖的内容改变时，console.log不会执行，只有当fullName依赖的内容发生改变时，console.log才会被执行。
+
+虽然watch也能实现数据缓存，性能也不错，但相比computed来说，复杂了很多，所以如果一个功能既可以通过computed实现，methods实现，watch实现，优先推荐computed来实现，因为用这种方法写代码，既简洁，性能又不错。
+
+### 事件 methods
+methods内的方法也可以监听数据的变化, 但是methods的方法没有缓存机制, 一但数据有变化就会执行。
+当computed属性和methods都可以实现，应该优先使用计算属性(computed)
+```html
+<p>姓：<input type="text" v-model="firstName"/></p>
+<p>名：<input type="text" v-model="lastName"/></p>
+<p>{{ username() }}</p>
+<script>
+export default {
+  data() {
+    return {
+      firstName: '',
+      lastName: ''
+    }
+  },
+  methods: {
+    username() {
+      console.log('计算了一次') 
+      return this.firstName + ' ' + this.lastName;
+    }
+  }
+}
+</script>
+```
+
+### 事件处理和事件修饰符
+vue中使用`v-on`指令来进行事件监听, js的事件方法大部分都可以使用
+```html
+<!-- vue中用 v-on 监听的事件如无参数无需加() -->
+<button v-on:click="add">加1</button>
+<!-- vue中可以用语法糖@来代替v-on -->
+<button @click="add">加1</button>
+<p>{{num}}</p>
+<script>
+export default {
+  data() {
+    return {
+      num: 0
+    }
+  },
+  methods: {
+    // vue中的方法需要写在methods里面
+    add() {
+      this.num = this.num + 1;
+    }
+  }
+}
+</script>
+```
+
+#### 修饰符
+- 事件修饰符
+  + .stop: 阻止冒泡
+  + .prevent: 阻止默认事件
+  + .once: 事件只执行一次
+  + .capture: 使用事件捕获模式，即由外向内执行
+  + .self: 只在 event.target 是当前元素自身时触发处理函数
+  + .passive: 滚动事件的默认行为 (即滚动行为) 将会立即触发
+    * `<div v-on:scroll.passive="onScroll">...</div>` 
+    * .passive和.prevent不能同时使用, 因为.prevent会被忽略，且浏览器会报出警告
+    * .passive 修饰符能提高移动端性能
+  + 修饰符可串联使用: @click.stop.prevent   
+
+**使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。**
+- 按键修饰符
+  + .enter
+  + .tab
+  + .delete (捕获“删除”和“退格”键)
+  + .esc
+  + .space
+  + .up
+  + .down
+  + .left
+  + .right
+```html
+<!-- 只有在 `key` 是 `Enter` 时调用 `vm.submit()` -->
+<input v-on:keyup.enter="submit">
+```
+- 系统修饰符
+可以用如下修饰符来实现仅在按下相应按键时才触发鼠标或键盘事件的监听器
+  + .ctrl
+  + .alt
+  + .shift
+  + .meta  
+
+```html
+<!-- Ctrl + Click -->
+<div @click.ctrl="doSomething">Do something</div>
+```
+
+- 鼠标按键修饰符
+  + .left
+  + .right
+  + .middle

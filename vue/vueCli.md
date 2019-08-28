@@ -3,6 +3,7 @@
 ## vue-cli是什么？
 vue-cli是vue官方提供的专门为单页面应用快速搭建繁杂的脚手架，它可以轻松的创建新的应用程序
 而且自动生成vue和webpack的项目模板。最新版本是vue-cli3.0。
+[官方网址](https://cli.vuejs.org/zh/guide/cli-service.html)
 
 ## vue-cli3.0全局安装  
 打开cmd命令行窗口，输入以下命令   

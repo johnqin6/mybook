@@ -52,4 +52,5 @@
   * [vue组件开发与注册](vue/component.md)
   * [vue组件通信详解](vue/component2.md)
   * [自定义指令](vue/directive.md)
+  * [自定义过滤器](vue/filter.md)
   * [vuex的使用总结](vue/vuex.md)

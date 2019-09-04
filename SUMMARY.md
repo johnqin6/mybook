@@ -49,4 +49,6 @@
 * [vue的学习总结](vue/index.md)
   * [vue的知识点总结](vue/index.md)
   * [vue-cli3搭建vue开发环境](vue/vueCli.md)
+  * [vue组件开发与注册](vue/component.md)
+  * [vue组件通信详解](vue/component2.md)
   * [vuex的使用总结](vue/vuex.md)

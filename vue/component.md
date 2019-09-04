@@ -99,7 +99,7 @@ export default {
   name: 'remmond-header',
   // props: ['title'] // props 用于子组件接收父组件的传的值
   props: { // 也可以以对象的格式接收父组件传递的值，并对值的类型进行限定
-    title: String, // String: 表示 该字段只能传递string类型的数据
+    type: String, // String: 表示 该字段只能传递string类型的数据
     default: ''  // default: 默认值
   }
 }

@@ -53,4 +53,5 @@
   * [vue组件通信详解](vue/component2.md)
   * [自定义指令](vue/directive.md)
   * [自定义过滤器](vue/filter.md)
+  * [vue-router路由知识点总结](./vueRouter.md)
   * [vuex的使用总结](vue/vuex.md)

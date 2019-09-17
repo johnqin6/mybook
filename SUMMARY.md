@@ -58,3 +58,4 @@
   * [vue-router路由知识点总结](./vueRouter.md)
   * [vuex的使用总结](vue/vuex.md)
   * [axios请求](vue/axios.md)
+  * [vue项目中对axios的封装](vue/vueAxios.md)

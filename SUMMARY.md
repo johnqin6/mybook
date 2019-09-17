@@ -53,5 +53,8 @@
   * [vue组件通信详解](vue/component2.md)
   * [自定义指令](vue/directive.md)
   * [自定义过滤器](vue/filter.md)
+  * [vue过渡和动画](vue/animate.md)
+  * [mixin混入](vue/mixin.md)
   * [vue-router路由知识点总结](./vueRouter.md)
   * [vuex的使用总结](vue/vuex.md)
+  * [axios请求](vue/axios.md)

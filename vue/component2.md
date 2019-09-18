@@ -115,7 +115,8 @@ Bus的通信原理：其实就是通过一个公共的vue实例媒介来统一�
 和监听Bus事件来实现组件之间的通信和传递数据    
 
 1. 首先我们需要建一个vue实例作为总线：
-Bus不放在vue原型的方式, 这种方式每次使用Bus都要单独引入Bus
+Bus不放在vue原型的方式, 这种方式每次使用Bus都要单独引入Bus   
+
 ```javascript
 // Bus.js
 import Vue from 'vue'
@@ -204,7 +205,8 @@ plugins.forEach(plugin => Vue.use(plugin))
 素或子组件注册引用信息。引用信息将注册到父组件的`$refs`对象上
 - 如果在普通的DOM元素上使用，引用指向的就是DOM元素，在子组件上，引用就指向组件
 
-例子：
+例子：   
+
 ```html
 <!--父组件-->
 <template>
@@ -261,18 +263,21 @@ export default {
 ## 方法四: 发布订阅模式
 [官方GitHub](https://github.com/mroderick/PubSubJS)     
 1. 通过`npm i pubsub --save`的方式引入pubsub库  
-2. 创建`event-type.js`定义Symbol类型的数据并导出  
+2. 创建`event-type.js`定义Symbol类型的数据并导出    
+
 ```javascript
 // event-types.js
 export const MY_TOPIC = Symbol('MY_TOPIC')
 ```
-3. 在需要发布(传递事件)的地方引入`pubsub` 和 `event=type.js`,并且通过以下方式发布事件
+3. 在需要发布(传递事件)的地方引入`pubsub` 和 `event=type.js`,并且通过以下方式发布事件  
+
 ```javascript
 import PubSub from 'pubsub'
 import { MY_TOPIC } from './event-types.js'
 PubSub.publish(MY_TOPIC, 'world');
 ```  
-4. 在需要订阅(接受事件)的地方引入pubsub和 event=type.js,并且通过以下方式接受事件   
+4. 在需要订阅(接受事件)的地方引入pubsub和 event=type.js,并且通过以下方式接受事件    
+
 ```javascript
 import PubSub from 'pubsub'
 import { MY_TOPIC } from './event-types.js'

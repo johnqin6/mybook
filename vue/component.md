@@ -31,7 +31,8 @@ export default {
 
 - 全局组件依次引入注册的方式
 1. 首先在src/components新建index.js文件
-2. 在index.js文件中对组件进行依次引入注册
+2. 在index.js文件中对组件进行依次引入注册   
+
 ```javascript
 // index.js
 import tHeader from './tHeader'
@@ -44,7 +45,8 @@ const install = Vue => {
 
 export default install
 ```
-3. 在main.js中全局组件在vue中注册
+3. 在main.js中全局组件在vue中注册  
+
 ```javascript
 import components from './components'
 
@@ -65,7 +67,8 @@ Vue.use(components) // 注册全局组件
 </template>
 ```
 - 遍历数组的方式注册全局组件 
-与第一种方式步骤相似，只是将第二步和第三步整合了，并以数组的方式注册
+与第一种方式步骤相似，只是将第二步和第三步整合了，并以数组的方式注册  
+
 ```javascript
 // index.js
 import Vue from 'vue' // 引入vue，可以直接在本文件完成注册，无需再在main.js进行操作
@@ -106,7 +109,8 @@ export default {
 </script>
 ```
 ### 注册局部组件
-局部组件是在使用时注册
+局部组件是在使用时注册  
+
 ```html
 <!--remmond.vue-->
 <template>

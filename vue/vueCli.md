@@ -38,6 +38,7 @@ vue-cli是vue官方提供的专门为单页面应用快速搭建繁杂的脚手�
 - vue.config.js  vue项目配置文件（包括webpack）  
 
 ## vue-cli3进行跨域代理配置
+
 ```javascript
 // vue.config.js
 module.exports = {
@@ -64,6 +65,7 @@ module.exports = {
 > vue add style-resources-loader    
 2. 此时会让css预处理器(less, sass等), 选择less即可
 3. 在vue.config.js进行配置引入已写好的全局less变量
+
 ```javascript
 pluginOptions: {
   'style-resources-loader': {

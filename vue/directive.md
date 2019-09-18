@@ -52,7 +52,8 @@ Vue.directive('color', function (el, binding) {
 // 使用：注意直接写会被解析成data中的数据“red” 需要字符串则嵌套引号"'red'"
 <p v-color="'red'"></p>
 ```
-1. 首先创建一个`directive.js`文件然后编写全局的自定义组件
+1. 首先创建一个`directive.js`文件然后编写全局的自定义组件 
+
 ```javascript
 export default (Vue) => {
   Vue.directive('dColor', {
@@ -68,6 +69,7 @@ export default (Vue) => {
 }
 ```
 2. 在main.js文件中引入 `directive.js`文件, 并使用Vue.use(directive)注册
+
 ```javascript
 import Vue from 'vue';
 import App from './App.vue';
@@ -83,6 +85,7 @@ new Vue({
 ```
 
 3. 在组件中使用
+
 ```html
 <template>
     <div class="hello">
@@ -129,6 +132,7 @@ export default {
 }
 ```
 使用局部自定义组件
+
 ```html
 <template>
   <div>

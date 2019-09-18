@@ -39,6 +39,7 @@ MVVM是前端视图层的分层开发思想，主要把每一个页面分层M/V/
 
 ### vue中的双向绑定
 vue中用v-model绑定的数据，具有双向绑定的特性，即数据变化，视图随之变化，视图变化，数据也跟着变化。
+
 ```html
 <template>
   <div>
@@ -73,23 +74,21 @@ export default {
     <span>hello {{msg}}</span>
 
     <!-- 模板语法可以使用js表达式 -->
-    {{ num + 1}}
-    {{ ok ? 'YES' : 'NO' }}
-    {{ message.split('').reverse().join('') }}
 
     <!-- 不能使用的例子 -->
     <!-- 这是语句，不是表达式 -->
-    {{ var a = 1 }}
     <!-- 流控制也不会生效，请使用三元表达式 -->
-    {{ if (ok) { return message } }}
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
       msg: 'vue.js',
-      num: 1
+      num: 1,
+      message: '',
+      ok: true
     }
   }
 }
@@ -360,7 +359,7 @@ methods内的方法也可以监听数据的变化, 但是methods的方法没有�
 ```html
 <p>姓：<input type="text" v-model="firstName"/></p>
 <p>名：<input type="text" v-model="lastName"/></p>
-<p>{{ username() }}</p>
+<p v-text="username()"></p>
 <script>
 export default {
   data() {

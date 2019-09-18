@@ -55,7 +55,7 @@
   * [自定义过滤器](vue/filter.md)
   * [vue过渡和动画](vue/animate.md)
   * [mixin混入](vue/mixin.md)
-  * [vue-router路由知识点总结](./vueRouter.md)
+  * [vue-router路由知识点总结](vue/vueRouter.md)
   * [vuex的使用总结](vue/vuex.md)
   * [axios请求](vue/axios.md)
   * [vue项目中对axios的封装](vue/vueAxios.md)

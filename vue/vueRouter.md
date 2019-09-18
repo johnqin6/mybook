@@ -11,6 +11,7 @@ vue Router 是vue.js官方的路由管理器。它和vue.js的核心深度集成
 ## 二、使用vue-router 
 ### 配置简单的路由
 1. 首先在src文件夹下创建一个`router.js`文件，然后在其中构建路由
+
 ```javascript
 // router.js
 import Vue from 'vue'
@@ -30,6 +31,7 @@ export default new Router({
 })
 ```
 2. 在main.js中引入和注册路由
+
 ```javascript
 // main.js
 ...
@@ -41,6 +43,7 @@ new Vue({
 }).$mount('#app')
 ```
 3. 在app.vue中配置路由出口`<router-view></router-view>`,这一步很重要，没有出口，组件将不会显示
+
 ```html
 <!-- app.vue -->
 <template>
@@ -55,6 +58,7 @@ new Vue({
 ### 配置嵌套路由
 vue-router不仅可以配置简单的一层(一级)路由，也可以配置多层(多级)路由，即嵌套路由。
 1. 首先我们将我们刚才在router.js配置的简单路由进行一些修改。
+
 ```javascript
 // router.js
 import Vue from 'vue'
@@ -82,6 +86,7 @@ export default new Router({
 })
 ```
 2. 在home组件中添加子路由出口`<router-view></router-view>` 
+
 ```html
 <template>
   <div class="home">
@@ -106,6 +111,7 @@ vue-router中路由跳转既可以使用vue-router提供的`<router-link></route
 说明:router-link其实就是封装的a标签
 
 - 静态路由跳转
+
 ```html
 <template>
   <div id="app">
@@ -136,6 +142,7 @@ export default new Router({
 })
 ```
 2. 在`router-link`配置跳转参数
+
 ```html
 <template>
   <div id="app">

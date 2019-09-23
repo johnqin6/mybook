@@ -59,3 +59,4 @@
   * [vuex的使用总结](vue/vuex.md)
   * [axios请求](vue/axios.md)
   * [vue项目中对axios的封装](vue/vueAxios.md)
+  * [实现一个命令式confirm弹框组件](vue/extend.md)

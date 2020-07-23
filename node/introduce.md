@@ -37,7 +37,8 @@
   * 命令行工具
     * npm(node)
     * git(c语言)
-    * hexo(node) 。。。
+    * hexo(node) 。。。  
+    
   对于前端来说，使用node最多的是命令行工具
    * 主要使用第三方的包
    * webpack
